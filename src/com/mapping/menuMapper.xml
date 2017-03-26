@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.MenuMapper">
+    <!-- 解决表名与字段不匹配 -->
+    <resultMap type="Menu" id="MenuResultMap">
+        <id property="menuCode" column="menu_code"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="parentCode" column="parent_menu_code"/>
+        <result property="icon" column="menu_icon"/>
+        <result property="uri" column="menu_uri"/>
+        <result property="visible" column="menu_visible"/>
+    </resultMap>
+	<select id="getMenu" resultMap="MenuResultMap" >
+        select * from tb_menu where menu_code = '1'
+    </select>
+</mapper>
