@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ExamPaperMapper">
+ 	<resultMap type="ExamPaper" id="paperResultMap">
+        <id property="paperID" column="paper_id"/>
+        <result property="paperName" column="paper_name"/>
+        <result property="examType" column="exam_type"/>
+        <result property="quesIds" column="quesIds"/>
+        <result property="state" column="state"/>
+        <result property="toGroup" column="toGroup"/>
+        <result property="createUser" column="createUser"/>
+        <result property="createTime" column="createTime"/>
+        <result property="description" column="description"/>
+     
+    </resultMap>
+    
+        <!-- 服务器分页查询 -->
+    <select id="getAllExamPaperByPage" resultMap="paperResultMap" resultType="ExamPaper">
+        select * from tb_exampaper where 1=1 
+        <if test="paperName != null">
+		AND `paper_name` LIKE concat('%',#{paperName},'%')
+		</if>
+		<if test="examType != null">
+		AND `exam_type`LIKE concat('%', #{examType},'%')
+		</if>
+		<if test="quesIds != null">
+		AND `quesIds`LIKE concat('%', #{quesIds},'%')
+		</if>
+		<if test="state != null">
+		AND `state`LIKE concat('%', #{state},'%')
+		</if>
+		<if test="toGroup != null">
+		AND `toGroup`LIKE concat('%', #{toGroup},'%')
+		</if>
+		<if test="createUser != null">
+		AND `createUser`LIKE concat('%', #{createUser},'%')
+		</if>
+		<if test="createTime != null">
+		AND `createTime`LIKE concat('%', #{createTime},'%')
+		</if>
+		<if test="description != null">
+		AND `description`LIKE concat('%', #{description},'%')
+		</if>
+		
+		limit #{startPos},#{pageSize} 
+        
+    </select>
+    <!-- 获取用户总数 -->
+    <select id="getExamPaperCount" resultType="Integer">
+        select count(*) from tb_exampaper
+    </select>
+    
+</mapper>

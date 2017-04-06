@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.QuesMapper">
+ 	<resultMap type="Question" id="quesResultMap">
+        <id property="quesID" column="ques_id"/>
+        <result property="content" column="content"/>
+        <result property="select1" column="select1"/>
+        <result property="select2" column="select2"/>
+        <result property="select3" column="select3"/>
+        <result property="select4" column="select4"/>
+        <result property="anwser" column="anwser"/>
+        <result property="quesType" column="ques_type"/>
+        <result property="createTime" column="createTime"/>
+        <result property="createUserName" column="createUserName"/>
+        <result property="score" column="score"/>
+        <result property="createUserID" column="createUserID"/>
+        <result property="description" column="description"/>
+    </resultMap>
+    
+        <!-- 服务器分页查询 -->
+    <select id="getAllQuesByPage" resultMap="quesResultMap" resultType="Question">
+        select * from tb_question where 1=1 
+        <if test="content != null">
+		AND `content` LIKE concat('%',#{content},'%')
+		</if>
+		<if test="select1 != null">
+		AND `select1`LIKE concat('%', #{select1},'%')
+		</if>
+		<if test="select2 != null">
+		AND `select2`LIKE concat('%', #{select2},'%')
+		</if>
+		<if test="select3 != null">
+		AND `select3`LIKE concat('%', #{select3},'%')
+		</if>
+		<if test="select1 != null">
+		AND `select4`LIKE concat('%', #{select4},'%')
+		</if>
+		<if test="answer != null">
+		AND `answer`LIKE concat('%', #{answer},'%')
+		</if>
+		<if test="quesType != null">
+		AND `ques_type`LIKE concat('%', #{quesType},'%')
+		</if>
+		<if test="score != null">
+		AND `score`LIKE concat('%', #{score},'%')
+		</if>
+		<if test="createUserName != null">
+		AND `createUserName`LIKE concat('%', #{createUserName},'%')
+		</if>
+		<if test="createTime != null">
+		AND `createTime`LIKE concat('%', #{createTime},'%')
+		</if>
+		<if test="description != null">
+		AND `description`LIKE concat('%', #{description},'%')
+		</if>
+		
+		limit #{startPos},#{pageSize} 
+        
+    </select>
+    <!-- 获取用户总数 -->
+    <select id="getQuesCount" resultType="Integer">
+        select count(*) from tb_question
+    </select>
+    
+</mapper>

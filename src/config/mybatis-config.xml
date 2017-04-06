@@ -6,10 +6,14 @@
         <typeAlias alias="User" type="com.model.User"/>
           <typeAlias alias="Menu" type="com.model.Menu"/>
            <typeAlias alias="Role" type="com.model.Role"/>
+           <typeAlias alias="Question" type="com.model.Question"/>
+           <typeAlias alias="ExamPaper" type="com.model.ExamPaper"/>
     </typeAliases>
     <mappers>
         <mapper resource="com/mapping/userMapper.xml" />
         <mapper resource="com/mapping/menuMapper.xml" />
         <mapper resource="com/mapping/roleMapper.xml" />
+        <mapper resource="com/mapping/quesMapper.xml" />
+        <mapper resource="com/mapping/examPaperMapper.xml" />
     </mappers>
 </configuration> 

@@ -5,7 +5,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-		<title>menuManage</title>
+		<title>examPaperManage</title>
 
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -36,9 +36,9 @@
 						
 						<div class = "form-horizontal">
 							<div class="col-sm-9">
-							<label class="col-sm-1 control-label no-padding-left" for="form-field-1">菜单名:</label>
+							<label class="col-sm-1 control-label no-padding-left" for="form-field-1">试卷名称:</label>
 								<input type="text" id="username" name="user_name"  class="col-xs-10 col-sm-3" />
-								<label class="col-sm-2 control-label no-padding-left" for="form-field-1">菜单图标:</label>
+								<label class="col-sm-2 control-label no-padding-left" for="form-field-1">试卷类型:</label>
 								<input type="text" id="menuName" name="menuName"  class="col-xs-10 col-sm-3" />
 								
 								<button onclick="search()" class="btn col-xs-10 col-sm-2 btn-sm" style="margin-left:25px;">
@@ -59,15 +59,15 @@
 				<div class="btn-toolbar" style="margin:10px 0;">
 						<button  onclick="add()"  class="btn btn-success">
 							<i class="ace-icon fa fa-check"></i>
-								新增菜单
+								新增试卷
 						</button>
 						<button  onclick="add()" class="btn btn-info">
 							<i class="ace-icon fa fa-pencil-square-o"></i>
-								修改菜单
+								修改试卷
 						</button>
 						<button  onclick="deleteUser()" class="btn btn-danger">
 							<i class="ace-icon fa   fa-ban "></i>
-								删除菜单
+								删除试卷
 						</button>
 
 					</div>
@@ -83,11 +83,14 @@
 								<span class="lbl"></span>
 							</label>
 						</th>
-		                <th>菜单名称</th>
-		                <th>父菜单</th>
-		                <th>图标</th>
-		                <th>链接地址</th>
-		                <th>是否可见</th>
+		                <th>试卷名称</th>
+		                <th>试卷类型</th>
+		                <th>题目IDS</th>
+		                <th>试卷状态</th>
+		                <th>分发组别(班级)</th>
+		                <th>创建者</th>
+		                <th>创建时间</th>
+		                 <th>备注</th>
 		            </tr>
 		        </thead>
 
@@ -203,7 +206,7 @@
 	var table = $('#example').DataTable({
 	   "serverSide": true,
 	    "ajax": {
-	        url: '<%=path%>/getAllMenu',
+	        url: '<%=path%>/exam/getAllExamPaper',
 	        type: 'POST',
 	        data: function(d){
 // 	        	d.user_name = $('#username').val();
@@ -215,18 +218,20 @@
 	     "columns":[
 	     	     {
                  "sClass": "text-center",
-                 "data": "menuCode",
+                 "data": "paperID",
                  "render": function (data, type, full, meta) {
                      return '<input type="checkbox"  class="ace"  value="' + data + '" /><span class="lbl"></span>';
                  },
                  "bSortable": false
              },
-	      {"data":"menuName"},
-	      {"data":"parentCode"},
-	      {"data":"icon"},
-	      {"data":"uri"},
-	      {"data":"visible"}
-	      
+	      {"data":"paperName"},
+	      {"data":"examType"},
+	      {"data":"quesIds"},
+	      {"data":"state"},
+	      {"data":"toGroup"},
+	      {"data":"createUser"},
+	      {"data":"createTime"},
+	      {"data":"description"}
   		]
 	 });
 
