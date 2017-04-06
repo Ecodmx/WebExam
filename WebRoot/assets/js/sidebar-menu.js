@@ -10,6 +10,7 @@
   else {
    if (!options.url) return;
    $.getJSON(options.url, options.param, function (data) {
+	   
     init(target, data);
    });
   }
@@ -18,7 +19,9 @@
   //menu.parent().addClass('active');
   //menu.parent().parentsUntil('.nav-list', 'li').addClass('active').addClass('open');
   function init(target, data) {
+	 
    $.each(data, function (i, item) {
+	   
     var li = $('<li></li>');
     var a = $('<a></a>');
     var icon = $('<i></i>');

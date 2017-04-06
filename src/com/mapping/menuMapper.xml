@@ -11,7 +11,38 @@
         <result property="uri" column="menu_uri"/>
         <result property="visible" column="menu_visible"/>
     </resultMap>
-	<select id="getMenu" resultMap="MenuResultMap" >
-        select * from tb_menu where menu_code = '1'
+	<select id="getRootMenu" resultMap="MenuResultMap" resultType="Menu">
+        select * from tb_menu where parent_menu_code = 'ROOT'
+    </select>
+    
+    <select id="getMenu" resultMap="MenuResultMap" resultType="Menu">
+        select * from tb_menu 
+    </select>
+    
+     <select id="getAllMenuByPage" resultMap="MenuResultMap" resultType="Menu">
+        select * from tb_menu where 1=1
+        <if test="menuCode != null">
+		AND `menu_code` LIKE concat('%',#{menuCode},'%')
+		</if>
+		<if test="menuName != null">
+		AND `menu_name`LIKE concat('%', #{menuName},'%')
+		</if>
+		<if test="parentCode != null">
+		AND `parent_menu_code`LIKE concat('%', #{parentCode},'%')
+		</if>
+		<if test="icon != null">
+		AND `menu_icon`LIKE concat('%', #{icon},'%')
+		</if>
+		<if test="uri != null">
+		AND `menu_uri`LIKE concat('%', #{uri},'%')
+		</if>
+		<if test="visible != null">
+		AND `menu_visible`LIKE concat('%', #{visible},'%')
+		</if>
+		limit #{startPos},#{pageSize} 
+    </select>
+    
+    <select id="getMenuCount" resultType="Integer" >
+        select count(*) from tb_menu 
     </select>
 </mapper>

@@ -43,9 +43,29 @@ public class UserServiceImpl implements UserService {
 		userMapper.insertUser(user);
 	}
 	@Override
-	public Menu getMenu() {
+	public List<Menu> getMenu() {
 		// TODO Auto-generated method stub
 		return menuMapper.getMenu();
+	}
+	@Override
+	public int getMenuCount() {
+		// TODO Auto-generated method stub
+		return menuMapper.getMenuCount();
+	}
+	@Override
+	public List<Menu> getRootMenu() {
+		// TODO Auto-generated method stub
+		return menuMapper.getRootMenu();
+	}
+	@Override
+	public List<User> getAllUserByPage(int startPro , int pageSize , User user) {
+		// TODO Auto-generated method stub
+		return userMapper.getAllUserByPage(startPro,pageSize,user.getUser_name() , user.getE_mail());
+	}
+	@Override
+	public int getUserCount() {
+		// TODO Auto-generated method stub
+		return userMapper.getUserCount();
 	}
 
 }

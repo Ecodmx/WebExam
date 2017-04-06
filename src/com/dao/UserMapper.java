@@ -14,4 +14,8 @@ public interface UserMapper {
 	int getUsernameAndPassword(@Param("username")String username,@Param("password") String password);
 
 	void insertUser(User user);
+
+	List<User> getAllUserByPage(@Param(value="startPos") Integer startPos,@Param(value="pageSize") Integer pageSize, @Param(value="username")String username,@Param(value="email") String email);
+
+	int getUserCount();
 }

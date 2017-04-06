@@ -5,9 +5,11 @@
     <typeAliases>
         <typeAlias alias="User" type="com.model.User"/>
           <typeAlias alias="Menu" type="com.model.Menu"/>
+           <typeAlias alias="Role" type="com.model.Role"/>
     </typeAliases>
     <mappers>
         <mapper resource="com/mapping/userMapper.xml" />
         <mapper resource="com/mapping/menuMapper.xml" />
+        <mapper resource="com/mapping/roleMapper.xml" />
     </mappers>
 </configuration> 

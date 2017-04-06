@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.RoleMapper">
+ 	<resultMap type="Role" id="roleResultMap">
+        <id property="roleID" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="description" column="description"/>
+        <result property="group" column="group"/>
+    </resultMap>
+    
+        <!-- 服务器分页查询 -->
+    <select id="getAllRoleByPage" resultMap="roleResultMap" resultType="Role">
+        select * from tb_role where 1=1 
+        <if test="roleName != null">
+		AND `role_name` LIKE concat('%',#{roleName},'%')
+		</if>
+		<if test="group != null">
+		AND `group`LIKE concat('%', #{group},'%')
+		</if>
+		limit #{startPos},#{pageSize} 
+        
+    </select>
+    <!-- 获取用户总数 -->
+    <select id="getRoleCount" resultType="Integer">
+        select count(*) from tb_role
+    </select>
+    
+</mapper>

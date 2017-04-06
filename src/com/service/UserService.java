@@ -14,5 +14,13 @@ public interface UserService {
 	
 	void insertUser(User user);
 	
-	Menu getMenu();
+	int getMenuCount();
+	
+	List<Menu> getMenu();
+
+	List<Menu> getRootMenu();
+
+	List<User> getAllUserByPage(int startPos, int pageSize, User user);
+
+	int getUserCount();
 }

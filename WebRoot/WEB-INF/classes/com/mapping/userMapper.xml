@@ -19,6 +19,22 @@
     <select id="findAllUser" resultMap="userResultMap" resultType="User">
         select * from tb_user
     </select>
+    <!-- 服务器分页查询 -->
+    <select id="getAllUserByPage" resultMap="userResultMap" resultType="User">
+        select * from tb_user where 1=1 
+        <if test="username != null">
+		AND `user_name` LIKE concat('%',#{username},'%')
+		</if>
+		<if test="email != null">
+		AND `e_mail`LIKE concat('%', #{email},'%')
+		</if>
+		limit #{startPos},#{pageSize} 
+        
+    </select>
+    <!-- 获取用户总数 -->
+    <select id="getUserCount" resultType="Integer">
+        select count(*) from tb_user
+    </select>
     
      <select id="selectByPrimaryKey" resultMap="userResultMap" resultType="User">
         select
@@ -35,4 +51,6 @@
      <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
 		insert tb_user (<include refid="UserColumn"/>) values (#{user_name},#{password},#{e_mail},#{description})
 	</insert>
+	
+	
 </mapper>

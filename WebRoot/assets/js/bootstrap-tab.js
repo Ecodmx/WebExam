@@ -9,7 +9,7 @@ var addTabs = function (options) {
 
  if (!$("#" + id)[0]) {
   //固定TAB中IFRAME高度
-  mainHeight = $(document.body).height() - 90;
+  mainHeight = $(document.body).height() ;
   //创建新TAB的title
   title = '<li role="presentation" id="tab_' + id + '"><a href="#' + id + '" aria-controls="' + id + '" role="tab" data-toggle="tab">' + options.title;
   //是否允许关闭
