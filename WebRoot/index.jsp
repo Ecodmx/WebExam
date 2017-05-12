@@ -135,7 +135,7 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="#">当前位置</a>
 							</li>
-							<li class="active">首页</li>
+							<li class="active">开始考试</li>
 						</ul><!-- /.breadcrumb -->
 
 						<div class="nav-search" id="nav-search">

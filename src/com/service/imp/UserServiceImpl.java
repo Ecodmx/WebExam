@@ -63,9 +63,30 @@ public class UserServiceImpl implements UserService {
 		return userMapper.getAllUserByPage(startPro,pageSize,user.getUser_name() , user.getE_mail());
 	}
 	@Override
-	public int getUserCount() {
+	public int getUserCount(User user) {
 		// TODO Auto-generated method stub
-		return userMapper.getUserCount();
+		return userMapper.getUserCount(user);
+	}
+	@Override
+	public void delUser(int userId) {
+		// TODO Auto-generated method stub
+		userMapper.delUser(userId);
+	}
+	@Override
+	public void updateUser(User user) {
+		// TODO Auto-generated method stub
+		userMapper.updateUser(user);
+	}
+	@Override
+	public boolean checkUserName(String user_name) {
+		// TODO Auto-generated method stub
+		String checkRes = userMapper.checkUserName(user_name);
+		if(null != checkRes ){
+			return false;
+		}else{
+			return true;
+		}
+		
 	}
 
 }

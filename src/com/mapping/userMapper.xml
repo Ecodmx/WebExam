@@ -32,8 +32,14 @@
         
     </select>
     <!-- 获取用户总数 -->
-    <select id="getUserCount" resultType="Integer">
-        select count(*) from tb_user
+    <select id="getUserCount" resultType="Integer" parameterType="User">
+        select count(*) from tb_user where 1=1 
+        <if test="user_name != null">
+		AND `user_name` LIKE concat('%',#{user_name},'%')
+		</if>
+		<if test="e_mail != null">
+		AND `e_mail`LIKE concat('%', #{e_mail},'%')
+		</if>
     </select>
     
      <select id="selectByPrimaryKey" resultMap="userResultMap" resultType="User">
@@ -49,8 +55,18 @@
     </select>
     
      <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
-		insert tb_user (<include refid="UserColumn"/>) values (#{user_name},#{password},#{e_mail},#{description})
+		insert into  tb_user (<include refid="UserColumn"/>) values (#{user_name},#{password},#{e_mail},#{description})
 	</insert>
 	
+	<delete id="delUser" parameterType="int">
+		delete from tb_user where user_id=#{userId}
+	</delete>
 	
+	<update id="updateUser" parameterType="User" >
+		update  tb_user set user_name=#{user_name},password=#{password},e_mail=#{e_mail},description=#{description} where user_id=#{user_id}
+	</update>
+	
+	<select id="checkUserName" parameterType="String" resultType="String">
+		select user_name from tb_user where 1=1 and user_name = #{user_name}
+	</select>
 </mapper>

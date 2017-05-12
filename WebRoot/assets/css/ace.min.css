@@ -15,7 +15,7 @@ html {
 }
 
 body {
-	background-color: #E4E6E9;
+	/*background-color: #E4E6E9;*/
 	padding-bottom: 0;
 	font-family: 'Open Sans';
 	font-size: 13px;
@@ -8681,7 +8681,7 @@ input[disabled]:hover {
 
 input[readonly] {
 	color: #939192;
-	background: #F5F5F5 !important;
+	background: #F5F5F5 ;
 	cursor: default
 }
 

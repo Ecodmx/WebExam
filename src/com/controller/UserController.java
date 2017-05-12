@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,25 +50,59 @@ public class UserController {
 	@RequestMapping("/getAllUser")
 	@ResponseBody
 	public String getAllUser(HttpServletRequest request,User user){
-		String pageNow =request.getParameter("start");
-		String pageSize = request.getParameter("length");
+		String pageNow =request.getParameter("start");//分页参数
+		String pageSize = request.getParameter("length");//分页参数
 		int draw = Integer.valueOf(request.getParameter("draw")) ;//datatables参数
 		Page page = null;  
 		List<User> allUser;
 		
-		int totalCount = userService.getUserCount(); //获取分页总数
+		int totalCount = userService.getUserCount(user); //获取分页总数
 	    if (pageNow != null) {  
 	        page = new Page(totalCount, Integer.parseInt(pageNow) , Integer.parseInt(pageSize));  
 	        allUser = userService.getAllUserByPage(page.getStartPos(), page.getPageSize(),user);  
 	    } else {  
-	        page = new Page(totalCount, 1 , 10);  
+	        page = new Page(totalCount, 1 , 10);
 	        allUser = userService.getAllUserByPage(page.getStartPos(), page.getPageSize(),user);  
 	    }  
 		
 		JSONArray ja = JSONArray.fromObject(allUser);
 		StringBuilder sb = new StringBuilder("{\"draw\":"+draw+",\"recordsTotal\":"+totalCount+",\"recordsFiltered\":"+totalCount+",\"data\":");
 		sb.append(ja.toString());
-		sb.append("}");
+		sb.append("}");//拼接dataTables的参数 （感觉不太规范）
 		return sb.toString();
+	}
+	
+	@RequestMapping(value = "/saveUser" , produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String saveUser(HttpServletRequest request,User user){
+		JSONObject jo =new JSONObject();
+		int userid = user.getUser_id();
+		boolean checkRes = userService.checkUserName(user.getUser_name());
+		if(checkRes){
+			jo.put("flag", "true");
+			if(userid>0){
+				userService.updateUser(user);
+				jo.put("msg", "用户修改成功");
+			}else{
+				userService.insertUser(user);
+				jo.put("msg", "用户新增成功");
+			}
+		}else{
+			jo.put("flag", "false");
+			jo.put("msg", "用户名重复,请检查");
+		}
+		
+		
+		return jo.toString();
+	}
+	@RequestMapping(value = "/delUser" , produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String deleteUser(HttpServletRequest request){
+		int id = Integer.parseInt(request.getParameter("userID"));
+		//userService.insertUser(user);
+		userService.delUser(id);
+		JSONObject jo =new JSONObject();
+		jo.put("msg", "true");
+		return jo.toString();
 	}
 }

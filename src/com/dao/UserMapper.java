@@ -17,5 +17,11 @@ public interface UserMapper {
 
 	List<User> getAllUserByPage(@Param(value="startPos") Integer startPos,@Param(value="pageSize") Integer pageSize, @Param(value="username")String username,@Param(value="email") String email);
 
-	int getUserCount();
+	int getUserCount(User user);
+
+	void delUser(@Param(value="userId")int userId);
+
+	void updateUser(User user);
+
+	String checkUserName(@Param(value="user_name")String user_name);
 }

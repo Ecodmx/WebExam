@@ -22,5 +22,11 @@ public interface UserService {
 
 	List<User> getAllUserByPage(int startPos, int pageSize, User user);
 
-	int getUserCount();
+	int getUserCount(User user);
+
+	void delUser(int userId);
+
+	void updateUser(User user);
+
+	boolean checkUserName(String user_name);
 }

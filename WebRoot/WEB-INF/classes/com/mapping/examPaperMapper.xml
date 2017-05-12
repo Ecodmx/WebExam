@@ -48,7 +48,35 @@
     </select>
     <!-- 获取用户总数 -->
     <select id="getExamPaperCount" resultType="Integer">
-        select count(*) from tb_exampaper
+        select count(*) from tb_exampaper where 1=1
+        <if test="paperName != null">
+		AND `paper_name` LIKE concat('%',#{paperName},'%')
+		</if>
+		<if test="examType != null">
+		AND `exam_type`LIKE concat('%', #{examType},'%')
+		</if>
     </select>
     
+
+<select id="getType" resultMap="paperResultMap" resultType="ExamPaper">
+    select distinct exam_type from tb_exampaper 
+</select>
+
+<select id="getExamByType" resultMap="paperResultMap" resultType="ExamPaper">
+    select quesIds, paper_name from tb_exampaper where exam_type = #{examType}
+</select>
+
+<insert id="insertPaper"  parameterType="ExamPaper" useGeneratedKeys="true" keyProperty="paperID">
+	insert into tb_exampaper (paper_name,exam_type,quesIds,state,toGroup,createUser,createTime,description) values 
+	(#{paperName},#{examType},#{quesIds},#{state},#{toGroup},#{createUser},#{createTime},#{description})
+</insert>
+
+<update id="updatePaper">
+	update tb_exampaper set paper_name = #{paperName},exam_type=#{examType},quesIds=#{quesIds},state=#{state},
+	toGroup=#{toGroup},createUser=#{createUser},createTime=#{createTime},description=#{description}
+	 where paper_id = #{paperID}
+</update>
+	<select id="checkPaperName"  resultType="String">
+		select paper_name from tb_exampaper where 1=1 and paper_id != #{paperID} and paper_name = #{paperName}
+	</select>
 </mapper>

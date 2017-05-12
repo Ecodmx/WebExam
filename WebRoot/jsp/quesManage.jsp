@@ -37,15 +37,18 @@
 						<div class = "form-horizontal">
 							<div class="col-sm-9">
 							<label class="col-sm-1 control-label no-padding-left" for="form-field-1">题目:</label>
-								<input type="text" id="username" name="user_name"  class="col-xs-10 col-sm-3" />
-								<label class="col-sm-2 control-label no-padding-left" for="form-field-1">创建者:</label>
-								<input type="text" id="menuName" name="menuName"  class="col-xs-10 col-sm-3" />
+								<input type="text" id="s_content" name="user_name"  class="col-xs-4 col-sm-3" />
+								<label class="col-sm-1 control-label no-padding-left" for="form-field-1">类别:</label>
+								<input type="text" id="s_type" name="menuName"  class="col-xs-4 col-sm-3" />
+								<label class="col-sm-1 control-label no-padding-left" for="form-field-1">创建者:</label>
+								<input type="text" id="s_createUser" name="menuName"  class="col-xs-4 col-sm-3" />
 								
-								<button onclick="search()" class="btn col-xs-10 col-sm-2 btn-sm" style="margin-left:25px;">
+							</div>
+							
+							<button onclick="search()" class="btn col-xs-10 col-sm-2 btn-sm" style="margin-left:25px;">
 								<i class="ace-icon glyphicon glyphicon-zoom-in"></i>
 									查询 
 								</button>
-							</div>
 						</div>
 				
 
@@ -57,11 +60,11 @@
 	  	<div class="row">
 			<div class="col-xs-12">
 				<div class="btn-toolbar" style="margin:10px 0;">
-						<button  onclick="add()"  class="btn btn-success">
+						<button  onclick="showAddForm()"  class="btn btn-success">
 							<i class="ace-icon fa fa-check"></i>
 								新增题目
 						</button>
-						<button  onclick="add()" class="btn btn-info">
+						<button  onclick="editQues()" class="btn btn-info">
 							<i class="ace-icon fa fa-pencil-square-o"></i>
 								修改题目
 						</button>
@@ -77,12 +80,7 @@
 		   
 		     <thead>
 		            <tr>
-						<th class="center">
-							<label class="pos-rel">
-								<input type="checkbox" class="ace" />
-								<span class="lbl"></span>
-							</label>
-						</th>
+						
 		                <th>题目内容</th>
 		                <th>题目类别</th>
 		                <th>选项一</th>
@@ -109,49 +107,80 @@
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 										<span class="white">&times;</span>
 									</button>
-									添加用户
+									<span id="header_text">新增用户</span>
 								</div>
 							</div>
 
 							<div class="modal-body no-padding">
-							
+							<form id="addForm"  class = "form-horizontal">
 								<div class = "form-horizontal">
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 用户名 :</label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 题目内容:</label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-8" />
+											<textarea  id="i_ques_content" name="content" placeholder="content" class="col-xs-10 col-sm-8" ></textarea>
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 密码 :</label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">题目类别 :</label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="password" class="col-xs-10 col-sm-8" />
+											<input type="text" id="i_ques_type" name="quesType" placeholder="quesType" class="col-xs-10 col-sm-8" />
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 确认密码 :</label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 选项一 :</label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="confirmPassword" class="col-xs-10 col-sm-8" />
+											<input type="text" id="i_ques_select1" name="select1" placeholder="select1" class="col-xs-10 col-sm-8" />
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">邮箱:</label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">选项二:</label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="Email" class="col-xs-10 col-sm-8" />
+											<input type="text" id="i_ques_select2" name="select2" placeholder="select2" class="col-xs-10 col-sm-8" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">选项三:</label>
+
+										<div class="col-sm-9">
+											<input type="text" id="i_ques_select3" name="select3" placeholder="select3" class="col-xs-10 col-sm-8" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">选项四:</label>
+
+										<div class="col-sm-9">
+											<input type="text" id="i_ques_select4" name="select4" placeholder="select4" class="col-xs-10 col-sm-8" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">答案:</label>
+
+										<div class="col-sm-9">
+											<input type="text" id="i_ques_answer" name="answer" placeholder="answer" class="col-xs-10 col-sm-8" />
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">分值:</label>
+
+										<div class="col-sm-9">
+											<input type="text" id="i_ques_score" name="score" placeholder="score" class="col-xs-10 col-sm-8" />
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">备注:</label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="description" class="col-xs-10 col-sm-8" />
+											<input type="text" id="i_ques_description"  name="description" placeholder="description" class="col-xs-10 col-sm-8" />
 										</div>
 									</div>
 								</div>
+								</form>
 							</div>
 							<div class="modal-footer no-margin-top">
 								<button class="btn btn-sm btn-success pull-left" style="margin-left:33%;" data-dismiss="modal">
@@ -205,28 +234,24 @@
   <script type="text/javascript">
 
    $(document).ready(function(){
-
+	
 	var table = $('#example').DataTable({
+	  	
 	   "serverSide": true,
 	    "ajax": {
 	        url: '<%=path%>/ques/getAllQuestion',
 	        type: 'POST',
 	        data: function(d){
 // 	        	d.user_name = $('#username').val();
-	        	d.menuName = $('#menuName').val();
+	        	d.content = $('#s_content').val();
+	        	d.quesType = $('#s_type').val();
+	        	d.createUserName = $('#s_createUser').val();
 	        }
 	     //   {"user_name" :$('#username').val(),"e_mail":$('#email').val()}
 	    },
 	   
 	     "columns":[
-	     	     {
-                 "sClass": "text-center",
-                 "data": "quesID",
-                 "render": function (data, type, full, meta) {
-                     return '<input type="checkbox"  class="ace"  value="' + data + '" /><span class="lbl"></span>';
-                 },
-                 "bSortable": false
-             },
+	     	   
           {"data":"content"},
           {"data":"quesType"},
 	      {"data":"select1"},
@@ -239,19 +264,100 @@
 	      {"data":"score"},
 	      {"data":"description"}
 	      
-  		]
+  		],  		select: {
+						style: 'single'
+					}
 	 });
 
 	});
-	function add(){
+	function showAddForm(){
 		$('#modal-table').modal('show');
+		console.log($('#header_text'));
+		$('#header_text')[0].innerHTML="新增题目";
+		$('#addForm')[0].reset();
+	}
+	function saveQues(){
+	var table = $('#example').DataTable();
+	    $.ajax({
+	         url : "<%=path%>/user/saveUser",    
+	         type : "POST",    
+	         data : $('#addForm').serialize(),    
+	         success : function(data) {    
+	             console.log(data);
+	             if(data.flag == "true"){
+	             	bootbox.alert(data.msg,function(){
+	             		$('#modal-table').modal('hide');
+	             		table.ajax.reload();
+	             	});
+	             }else{
+	             	bootbox.alert(data.msg);
+	             }
+	         },    
+	         error : function(data) {
+	        	 alert("error");
+
+	         }    
+	    });   
+		
+	}
+	function editQues(){
+		var table = $('#example').DataTable();
+		
+		var formdata = table.row('.selected').data();
+		console.log(formdata);
+		if(formdata == null){
+			bootbox.alert("请选择一条数据");
+			return;
+		}
+			$('#modal-table').modal('show');
+			$('#header_text')[0].innerHTML="修改题目";
+			$('#i_ques_content').val(formdata.content);
+			$('#i_user_name').val(formdata.user_name);
+			$('#i_password').val(formdata.password);
+			$('#confirmPwd').hide();
+			$('#i_e_mail').val(formdata.e_mail);
+			$('#i_description').val(formdata.description);
+		
+		
 	}
 	function search(){
 		var table = $('#example').DataTable();
 		table.ajax.reload();
 	}
-	function deleteUser(){
+	function showDelModal(){
+	
+	var table = $('#example').DataTable();
+	var data = table.row('.selected').data();
+// 	console.log(data);
+	if(data == null){
+		bootbox.alert("请选择一条数据");
+	}else{
 		$('#modal-delete-table').modal('show');
+	}
+ 
+	}
+	function deleteUser(){
+		
+		var table = $('#example').DataTable();
+		console.log(table.row('.selected').data());
+		var userID = table.row('.selected').data().user_id;
+		 $.ajax({    
+	         url : "<%=path%>/user/delUser",    
+	         type : "POST",    
+	         data :{"userID":userID},    
+	         success : function(data) {    
+	             console.log(data);
+	             if(data.msg == "true"){
+	             	bootbox.alert("用户删除成功",function(){
+	             		table.ajax.reload();
+	             	});
+	             }
+	         },    
+	         error : function(data) {    
+	         alert("error");
+	//               $( '#serverResponse').html(data.status + " : " + data.statusText + " : " + data.responseText);    
+	         }    
+	    });   
 	}
   </script>
   

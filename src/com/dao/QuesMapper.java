@@ -15,4 +15,6 @@ public interface QuesMapper {
 			@Param(value="answer")String answer, @Param(value="quesType")String quesType,@Param(value="score") String score,
 			@Param(value="createUserName")String createUserName,@Param(value="createTime") String createTime, @Param(value="description")String description);
 
+	Question getQuesByID(@Param(value="quesid")String id);
+
 }

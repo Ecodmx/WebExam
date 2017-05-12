@@ -9,5 +9,7 @@ public interface QuestionService {
 	int getQuesCount();
 
 	List<Question> getAllQuesByPage(int startPos, int pageSize, Question ques);
+
+	Question getQuesByID(String id);
 	
 }

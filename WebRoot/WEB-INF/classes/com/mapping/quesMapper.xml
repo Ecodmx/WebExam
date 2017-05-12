@@ -62,5 +62,8 @@
     <select id="getQuesCount" resultType="Integer">
         select count(*) from tb_question
     </select>
-    
+    <!-- 根据id获取题目 -->
+    <select id="getQuesByID" resultType="Question">
+        select * from tb_question where ques_id = #{quesid}
+    </select>
 </mapper>

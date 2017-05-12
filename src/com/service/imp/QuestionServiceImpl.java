@@ -32,4 +32,10 @@ public class QuestionServiceImpl implements QuestionService {
 			);
 	}
 
+	@Override
+	public Question getQuesByID(String id) {
+		// TODO Auto-generated method stub
+		return quesMapper.getQuesByID(id);
+	}
+
 }

@@ -22,7 +22,7 @@
 		<script src="<c:url value="/js/buttons.print.min.js"/>"></script>
 		<script src="<c:url value="/js/buttons.colVis.min.js"/>"></script>
 		<script src="<c:url value="/js/dataTables.select.min.js"/>"></script>
-
+		<script src="<c:url value="/js/bootbox.js"/>"></script>  
 	</head>
   <body class="no-skin">
 	
@@ -36,16 +36,17 @@
 						
 						<div class = "form-horizontal">
 							<div class="col-sm-9">
-							<label class="col-sm-1 control-label no-padding-left" for="form-field-1">试卷名称:</label>
-								<input type="text" id="username" name="user_name"  class="col-xs-10 col-sm-3" />
-								<label class="col-sm-2 control-label no-padding-left" for="form-field-1">试卷类型:</label>
-								<input type="text" id="menuName" name="menuName"  class="col-xs-10 col-sm-3" />
+							<label class="col-sm-2 control-label no-padding-left" for="s_paperName">试卷名称:</label>
+								<input type="text" id="s_paperName" name="paperName"  class="col-xs-3 col-sm-3" />
+								<label class="col-sm-2 control-label no-padding-left" for="s_papaerType">试卷类型:</label>
+								<input type="text" id="s_papaerType" name="papaerType"  class="col-xs-3 col-sm-3" />
 								
-								<button onclick="search()" class="btn col-xs-10 col-sm-2 btn-sm" style="margin-left:25px;">
+
+							</div>
+								<button onclick="search()" class="btn col-xs-3 col-sm-2 btn-sm" style="margin-left:25px;">
 								<i class="ace-icon glyphicon glyphicon-zoom-in"></i>
 									查询 
 								</button>
-							</div>
 						</div>
 				
 
@@ -57,15 +58,15 @@
 	  	<div class="row">
 			<div class="col-xs-12">
 				<div class="btn-toolbar" style="margin:10px 0;">
-						<button  onclick="add()"  class="btn btn-success">
+						<button  onclick="showAddForm()"  class="btn btn-success">
 							<i class="ace-icon fa fa-check"></i>
 								新增试卷
 						</button>
-						<button  onclick="add()" class="btn btn-info">
+						<button  onclick="editExam()" class="btn btn-info">
 							<i class="ace-icon fa fa-pencil-square-o"></i>
 								修改试卷
 						</button>
-						<button  onclick="deleteUser()" class="btn btn-danger">
+						<button  onclick="deleteExam()" class="btn btn-danger">
 							<i class="ace-icon fa   fa-ban "></i>
 								删除试卷
 						</button>
@@ -77,12 +78,7 @@
 		   
 		     <thead>
 		            <tr>
-						<th class="center">
-							<label class="pos-rel">
-								<input type="checkbox" class="ace" />
-								<span class="lbl"></span>
-							</label>
-						</th>
+						
 		                <th>试卷名称</th>
 		                <th>试卷类型</th>
 		                <th>题目IDS</th>
@@ -97,7 +93,8 @@
 		    </table>
 		    </div>
 	    </div>
-</div>
+</div>		
+			<!-- 模态框表单 -->
 			<div id="modal-table" class="modal fade" tabindex="-1">
 					<div class="modal-dialog" >
 						<div class="modal-content">
@@ -106,52 +103,70 @@
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 										<span class="white">&times;</span>
 									</button>
-									添加用户
+									<span id = "header_text">新增试卷</span>
 								</div>
 							</div>
 
 							<div class="modal-body no-padding">
 							
-								<div class = "form-horizontal">
+								<form id="addForm" class = "form-horizontal">
+								<input type="text" id ="i_paperid" name="paperID" style="display:none" value="0"  placeholder="id" class="col-xs-10 col-sm-8" />
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 用户名 :</label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 试卷名称:</label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-8" />
+											<input type="text" id="i_paperName" name="paperName" placeholder="paperName" class="col-xs-10 col-sm-8" />
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 密码 :</label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 试卷类型 :</label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="password" class="col-xs-10 col-sm-8" />
+											<select class="chosen-select form-control " id="i_examType" name="examType" style="width:295px;" onchange="getExam(this.options[this.options.selectedIndex].value)" id="form-field-select-3" data-placeholder="Choose an exam type...">
+												<option value="">  </option>
+								
+											</select>
+										
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 确认密码 :</label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">题目IDs:</label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="confirmPassword" class="col-xs-10 col-sm-8" />
+											<input type="text" id="i_quesIDs" name="quesIds" placeholder="quesIds" class="col-xs-10 col-sm-8" />
+											<button id="quesBtn"  type="button" class="btn btn-info btn-sm dropdown-toggle">
+													选择题目
+													
+										</button>
+										</div>
+									
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">状态:</label>
+
+										<div class="col-sm-9">
+											<input type="text"  id="i_state" name="state" placeholder="state" class="col-xs-10 col-sm-8" />
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">邮箱:</label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">分发组别:</label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="Email" class="col-xs-10 col-sm-8" />
+											<input type="text"  id="i_toGroup" name="toGroup" placeholder="toGroup" class="col-xs-10 col-sm-8" />
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">备注:</label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="description" class="col-xs-10 col-sm-8" />
+											<input type="text"  id="i_description" name="description" placeholder="description" class="col-xs-10 col-sm-8" />
 										</div>
 									</div>
+									</form>
 								</div>
 							</div>
 							<div class="modal-footer no-margin-top">
-								<button class="btn btn-sm btn-success pull-left" style="margin-left:33%;" data-dismiss="modal">
+								<button class="btn btn-sm btn-success pull-left"   onclick="savePaper()" style="margin-left:33%;" data-dismiss="modal">
 									<i class="ace-icon fa fa-check"></i>
 									确定
 								</button>
@@ -162,7 +177,60 @@
 							</div>
 						</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
-	</div>
+<div id="modal-chooseQues" class="modal fade"  tabindex="-1">
+					<div class="modal-dialog" style="width:1000px" >
+						<div class="modal-content">
+							<div class="modal-header no-padding">
+								<div class="table-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+										<span class="white">&times;</span>
+									</button>
+									选择题目
+								</div>
+							</div>
+
+							<div class="modal-body no-padding">
+								<div class="row">
+									<div class="col-xs-12">
+									  	<table id="table_ques" style="width:100%" class="table table-striped table-bordered table-hover">
+		   
+									     <thead>
+									            <tr>
+													
+									                <th >题目内容</th>
+									                <th>题目类别</th>
+									                <th>选项一</th>
+									                <th>选项二</th>
+									                <th>选项三</th>
+									                <th>选项四</th>
+									                <th>答案</th>
+									                <th>创建时间</th>
+									                <th>创建者</th>
+									                <th>分值</th>
+									                <th>备注</th>
+									            </tr>
+									      </thead>
+
+		 								</table>
+								</div>
+							</div>
+		   
+							</div>
+							<div class="modal-footer no-margin-top">
+								<button class="btn btn-sm btn-success pull-left"   onclick="chooseQuest()" style="margin-left:33%;" data-dismiss="modal">
+									<i class="ace-icon fa fa-check"></i>
+									确定
+								</button>
+								<button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+									<i class="ace-icon fa fa-times"></i>
+									关闭
+								</button>
+							</div>
+						</div>
+
+					</div>
+					
+			</div>
 <div id="modal-delete-table" class="modal fade" tabindex="-1">
 						<div class="modal-dialog" >
 						<div class="modal-content">
@@ -202,7 +270,12 @@
   <script type="text/javascript">
 
    $(document).ready(function(){
-
+	   $("#quesBtn").click(function(){  
+	         $("#modal-chooseQues").modal("show");  
+	   });  
+		appendData();
+		
+	 
 	var table = $('#example').DataTable({
 	   "serverSide": true,
 	    "ajax": {
@@ -210,20 +283,14 @@
 	        type: 'POST',
 	        data: function(d){
 // 	        	d.user_name = $('#username').val();
-	        	d.menuName = $('#menuName').val();
+	        	d.paperName = $('#s_paperName').val();
+	        	d.examType = $('#s_papaerType').val();
 	        }
 	     //   {"user_name" :$('#username').val(),"e_mail":$('#email').val()}
 	    },
 	   
 	     "columns":[
-	     	     {
-                 "sClass": "text-center",
-                 "data": "paperID",
-                 "render": function (data, type, full, meta) {
-                     return '<input type="checkbox"  class="ace"  value="' + data + '" /><span class="lbl"></span>';
-                 },
-                 "bSortable": false
-             },
+
 	      {"data":"paperName"},
 	      {"data":"examType"},
 	      {"data":"quesIds"},
@@ -232,20 +299,175 @@
 	      {"data":"createUser"},
 	      {"data":"createTime"},
 	      {"data":"description"}
-  		]
+  		],  
+  			select: {
+						style: 'single'
+					}
+	 });
+	 var table2 = $('#table_ques').DataTable({
+		"serverSide": true,
+
+	    "ajax": {
+	        url: '<%=path%>/ques/getAllQuestion',
+	        type: 'POST',
+
+	     //   {"user_name" :$('#username').val(),"e_mail":$('#email').val()}
+	    },
+	   	"bAutoWidth":false,
+		
+	   
+	     "columns":[
+	     	   
+          {"data":"content"},
+          {"data":"quesType"},
+	      {"data":"select1"},
+	      {"data":"select2"},
+	      {"data":"select3"},
+	      {"data":"select4"},
+	      {"data":"answer"},
+	      {"data":"createTime"},
+	      {"data":"createUserName"},
+	      {"data":"score"},
+	      {"data":"description"}
+	      
+  		],  		select: {
+						style: 'milty'
+					}
 	 });
 
 	});
-	function add(){
+		function appendData(){
+		    $.ajax({    
+	         url : "<%=path%>/exam/getType",    
+	         type : "POST",    
+	      //   data : $('#addForm').serialize(),    
+	         success : function(data) {    
+	             console.log(data);
+	             $.each(data, function (i, item) {
+	              $("#i_examType").append("<option value='"+item.examType+"'>"+item.examType+"</option>");
+	             });
+	            
+	         },    
+	         error : function(data) {    
+	         alert("error");
+	//               $( '#serverResponse').html(data.status + " : " + data.statusText + " : " + data.responseText);    
+	         }    
+	    });
+	
+	}
+	function showAddForm(){
 		$('#modal-table').modal('show');
+		console.log($('#header_text'));
+		$('#header_text')[0].innerHTML="新增试卷";
+		$('#addForm')[0].reset();
+		$('#i_quesIDs').attr("disabled",true);
+	}
+	function savePaper(){
+	var table = $('#example').DataTable();
+	    $.ajax({
+	         url : "<%=path%>/exam/savePaper",    
+	         type : "POST",    
+	         data : $('#addForm').serialize(),    
+	         success : function(data) {    
+	             console.log(data);
+	             if(data.flag == "true"){
+	             	bootbox.alert(data.msg,function(){
+	             		$('#modal-table').modal('hide');
+	             		table.ajax.reload();
+	             	});
+	             }else{
+	             	bootbox.alert(data.msg);
+	             }
+	         },    
+	         error : function(data) {
+	        	 alert("error");
+
+	         }    
+	    });   
+		
+	}
+	function editExam(){
+		var table = $('#example').DataTable();
+		
+		var formdata = table.row('.selected').data();
+		console.log(formdata);
+		if(formdata == null){
+			bootbox.alert("请选择一条数据");
+			return;
+		}
+			$('#modal-table').modal('show');
+			$('#header_text')[0].innerHTML="修改试卷";
+			$('#i_paperid').val(formdata.paperID);
+			$('#i_paperName').val(formdata.paperName);
+			$('#i_examType').val(formdata.examType);
+			$('#i_quesIDs').val(formdata.quesIds);
+			$('#i_quesIDs').attr("disabled",true);
+			$('#i_state').val(formdata.state);
+			$('#i_toGroup').val(formdata.toGroup);
+			
+			$('#i_description').val(formdata.description);
+		
+		
 	}
 	function search(){
 		var table = $('#example').DataTable();
 		table.ajax.reload();
 	}
-	function deleteUser(){
+	function showDelModal(){
+	
+	var table = $('#example').DataTable();
+	var data = table.row('.selected').data();
+// 	console.log(data);
+	if(data == null){
+		bootbox.alert("请选择一条数据");
+	}else{
 		$('#modal-delete-table').modal('show');
 	}
+ 
+	}
+	function deleteExam(){
+		
+		var table = $('#example').DataTable();
+		console.log(table.row('.selected').data());
+		var userID = table.row('.selected').data().user_id;
+		 $.ajax({    
+	         url : "<%=path%>/user/delUser",    
+	         type : "POST",    
+	         data :{"userID":userID},    
+	         success : function(data) {    
+	             console.log(data);
+	             if(data.msg == "true"){
+	             	bootbox.alert("用户删除成功",function(){
+	             		table.ajax.reload();
+	             	});
+	             }
+	         },    
+	         error : function(data) {    
+	         alert("error");
+	//               $( '#serverResponse').html(data.status + " : " + data.statusText + " : " + data.responseText);    
+	         }    
+	    });   
+	}
+	function chooseQuest(){
+		
+		var table2 = $('#table_ques').DataTable();
+		var formdata = table2.rows('.selected').data();
+		var quesIDs = "";
+		if(formdata == null) return;
+		 $.each(formdata, function (i, item) {
+		 		if(i == formdata.length-1){
+		 			quesIDs = quesIDs+ item.quesID ;
+		 		}else{
+		 			quesIDs = quesIDs+ item.quesID + ",";
+		 		}
+	            
+	     });
+	    $('#i_quesIDs').val( quesIDs);
+	    
+		
+		
+	}
+	
   </script>
   
 </html>

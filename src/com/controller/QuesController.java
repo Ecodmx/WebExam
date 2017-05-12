@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,5 +49,23 @@ public class QuesController {
 			sb.append("}");
 			return sb.toString();
 		}
-	
+		
+		@RequestMapping(value = "/startExam" )
+		public String startExam(HttpServletRequest request){
+			String ids = request.getParameter("quesIds");
+			System.out.println(ids);
+			request.setAttribute("ids", ids);
+			return "/jsp/startExam.jsp";
+		}
+		
+		@RequestMapping(value = "/getQuesByID",produces = {"application/json;charset=UTF-8"} )
+		@ResponseBody
+		public String getQuesByID (HttpServletRequest request){
+			String id = request.getParameter("quesid");
+			Question ques = quesService.getQuesByID(id); 
+			JSONObject jo = JSONObject.fromObject(ques);
+			return jo.toString();
+			
+			
+		}
 }
