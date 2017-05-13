@@ -14,6 +14,7 @@
      <context:component-scan base-package="com" />
      <!-- 开启注解 -->
      <mvc:annotation-driven />
+
      <!--
          配置静态资源，直接映射到对应的文件夹，不被DispatcherServlet处理，3.04新增功能，需要重新设置spring-mvc-3.0.xsd
      -->
@@ -31,4 +32,26 @@
 <!--         <property name="prefix" value="/jsp/" />  -->
 <!--          <property name="suffix" value=".jsp" /> -->
      </bean>
+  <mvc:interceptors> 
+   <!-- 多个拦截器，顺序执行 -->
+   <mvc:interceptor> 
+    <mvc:mapping path="/**"/> 
+        <mvc:exclude-mapping path="/**/*.css"/>
+        <mvc:exclude-mapping path="/**/*.js"/>
+        <mvc:exclude-mapping path="/**/*.png"/>
+        <mvc:exclude-mapping path="/**/*.gif"/>
+        <mvc:exclude-mapping path="/**/*.jpg"/>
+        <mvc:exclude-mapping path="/**/*.jpeg"/>
+        <mvc:exclude-mapping path="/**/*.map"/>
+        <mvc:exclude-mapping path="/**/*.eot"/>
+        <mvc:exclude-mapping path="/**/*.ttf"/>
+        <mvc:exclude-mapping path="/**/*.woff"/>
+        <mvc:exclude-mapping path="/**/*.woff2"/>
+        <mvc:exclude-mapping path="/**/*.ttf"/>
+        <mvc:exclude-mapping path="/**/*.svg"/>
+        <mvc:exclude-mapping path="/*login*"/>
+        <mvc:exclude-mapping path="/**/*Login*"/>
+    <bean class="com.util.LoginInterceptor"></bean> 
+   </mvc:interceptor> 
+  </mvc:interceptors> 
  </beans>

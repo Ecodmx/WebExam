@@ -8,7 +8,8 @@ import com.model.Menu;
 public interface MenuService {
 	List<Menu> getAllMenuByPage(int startPos, int pageSize, Menu menu);
 
+	int getMenuCount(int roleID);
+	
 	int getMenuCount();
-
 
 }

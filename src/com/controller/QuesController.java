@@ -65,7 +65,5 @@ public class QuesController {
 			Question ques = quesService.getQuesByID(id); 
 			JSONObject jo = JSONObject.fromObject(ques);
 			return jo.toString();
-			
-			
 		}
 }

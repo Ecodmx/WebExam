@@ -13,5 +13,7 @@ public interface RoleMapper {
 	List<Role> getAllRoleByPage(@Param(value="startPos")int startPos,@Param(value="pageSize") int pageSize, @Param(value="roleName")String roleName,
 			@Param(value="group")String group);
 
+	Role getRoleByID(@Param(value="user_id")int user_id);
+
 
 }

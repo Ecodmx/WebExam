@@ -2,6 +2,7 @@
 <html lang="en">
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8" %>  
 <%@ include file="/common/packages.jsp"%>
+<%User user = (User)session.getAttribute("User"); %>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <!-- 		<meta charset="utf-8" /> -->
@@ -43,34 +44,35 @@
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" src="images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
+									<%if(null != user){
+										out.print(user.getUser_name());} %>
 									
-									张三
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
 							</a>
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-								<li>
-									<a href="#">
-										<i class="ace-icon fa fa-cog"></i>
-										Settings
-									</a>
-								</li>
+<!-- 								<li> -->
+<!-- 									<a href="#"> -->
+<!-- 										<i class="ace-icon fa fa-cog"></i> -->
+<!-- 										Settings -->
+<!-- 									</a> -->
+<!-- 								</li> -->
+
+<!-- 								<li> -->
+<!-- 									<a href="profile.html"> -->
+<!-- 										<i class="ace-icon fa fa-user"></i> -->
+<!-- 										Profile -->
+<!-- 									</a> -->
+<!-- 								</li> -->
+
+<!-- 								<li class="divider"></li> -->
 
 								<li>
-									<a href="profile.html">
-										<i class="ace-icon fa fa-user"></i>
-										Profile
-									</a>
-								</li>
-
-								<li class="divider"></li>
-
-								<li>
-									<a href="#">
-										<i class="ace-icon fa fa-power-off"></i>
-										Logout
+									<a href="#" onclick="loginOut()">
+										<i  class="ace-icon fa fa-power-off"></i>
+										注销
 									</a>
 								</li>
 							</ul>
@@ -204,12 +206,11 @@
 		<script type="text/javascript">
 		$(function () { 
 			$('#menu').sidebarMenu({ url: "<%=path%>/getMenu"});
-	
-
-	
 		});
 			
-			
+			function loginOut(){
+				window.location.href = "<%=path%>/loginOut";
+			}
 
 		</script>
 	</body>

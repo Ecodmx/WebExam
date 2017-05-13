@@ -37,6 +37,7 @@
     <servlet-mapping> 
             <servlet-name>default</servlet-name> 
             <url-pattern>*.html</url-pattern> 
+            
     </servlet-mapping>
    <!-- 解决工程编码过滤器 -->
    <listener>

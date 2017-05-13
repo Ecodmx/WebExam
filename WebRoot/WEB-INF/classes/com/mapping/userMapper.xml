@@ -49,8 +49,8 @@
 		where user_id = #{userId,jdbcType=INTEGER}
     </select>
     
-    <select id="getUsernameAndPassword"  resultType="Integer">
-        select count(*) from tb_user where user_name = #{username} and password = #{password}
+    <select id="getUser"  resultType="User">
+        select * from tb_user where user_name = #{username} and password = #{password}
 		
     </select>
     
@@ -67,6 +67,6 @@
 	</update>
 	
 	<select id="checkUserName" parameterType="String" resultType="String">
-		select user_name from tb_user where 1=1 and user_name = #{user_name}
+		select user_name from tb_user where 1=1 and user_id!=#{userID} and user_name = #{user_name}
 	</select>
 </mapper>

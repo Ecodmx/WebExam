@@ -28,4 +28,10 @@ public class RoleServiceImpl implements RoleService {
 		// TODO Auto-generated method stub
 		return roleMapper.getAllRoleByPage(startPos,pageSize,role.getRoleName(),role.getGroup());
 	}
+
+	@Override
+	public Role getRole(int user_id) {
+		// TODO Auto-generated method stub
+		return roleMapper.getRoleByID(user_id);
+	}
 }

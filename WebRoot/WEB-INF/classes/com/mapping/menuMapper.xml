@@ -12,11 +12,13 @@
         <result property="visible" column="menu_visible"/>
     </resultMap>
 	<select id="getRootMenu" resultMap="MenuResultMap" resultType="Menu">
-        select * from tb_menu where parent_menu_code = 'ROOT'
+       select * from tb_menu as m left join tb_menu_link as ml on m.menu_code=ml.menu_code
+        where m.parent_menu_code = 'ROOT' and ml.link_id = #{roleID}
     </select>
     
     <select id="getMenu" resultMap="MenuResultMap" resultType="Menu">
-        select * from tb_menu 
+        select * from tb_menu as m left join tb_menu_link as ml on m.menu_code=ml.menu_code
+        where  ml.link_id = #{roleID}
     </select>
     
      <select id="getAllMenuByPage" resultMap="MenuResultMap" resultType="Menu">
@@ -43,6 +45,11 @@
     </select>
     
     <select id="getMenuCount" resultType="Integer" >
-        select count(*) from tb_menu 
+        select count(*) from tb_menu_link where link_id = #{roleID}
     </select>
+    
+        <select id="getMenuCountByConditions" resultType="Integer" >
+        select count(*) from tb_menu;
+    </select>
+    
 </mapper>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.model.Menu;
 import com.model.Page;
+import com.model.Role;
 import com.model.User;
 
 import com.service.MenuService;
+import com.service.RoleService;
 import com.service.UserService;
 import com.util.ActionHelper;
 
@@ -27,15 +30,19 @@ public class MenuController {
 	@Autowired
 	private UserService userService;
 	@Autowired
+	private RoleService roleService;
+	@Autowired
 	private MenuService menuService;
 	@RequestMapping(value = "/getMenu" , produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
-	public String  getMenu()  throws Exception{
-		int menuCount = userService.getMenuCount();
-		List<Menu> menu = userService.getRootMenu();
+	public String  getMenu(HttpSession session )  throws Exception{
+		User user = (User) session.getAttribute("User");
+		Role userRole = roleService.getRole(user.getUser_id());
+		int menuCount = userService.getMenuCount(userRole.getRoleID());
+		List<Menu> menu = userService.getRootMenu(userRole.getRoleID());
 		StringBuilder sb = new StringBuilder("");
 		
-		List<Menu> childMenu =userService.getMenu()  ;
+		List<Menu> childMenu =userService.getMenu(userRole.getRoleID())  ;
 		int count = 0;//menu计数
 //		for(int j = 0;j<menu.size();j++){
 //			if(!(menu.get(j).getParentCode().equals("ROOT"))){

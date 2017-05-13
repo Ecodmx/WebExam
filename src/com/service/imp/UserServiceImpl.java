@@ -32,9 +32,9 @@ public class UserServiceImpl implements UserService {
 		return  userMapper.selectByPrimaryKey(userId);
 	}
 	@Override
-	public int getUsernameAndPassword(String username, String password) {
+	public User getUser(String username, String password) {
 		// TODO Auto-generated method stub
-		return userMapper.getUsernameAndPassword(username , password);
+		return userMapper.getUser(username , password);
 		
 	}
 	@Override
@@ -43,19 +43,19 @@ public class UserServiceImpl implements UserService {
 		userMapper.insertUser(user);
 	}
 	@Override
-	public List<Menu> getMenu() {
+	public List<Menu> getMenu(int roleID) {
 		// TODO Auto-generated method stub
-		return menuMapper.getMenu();
+		return menuMapper.getMenu(roleID);
 	}
 	@Override
-	public int getMenuCount() {
+	public int getMenuCount(int roleID) {
 		// TODO Auto-generated method stub
-		return menuMapper.getMenuCount();
+		return menuMapper.getMenuCount(roleID);
 	}
 	@Override
-	public List<Menu> getRootMenu() {
+	public List<Menu> getRootMenu(int roleID) {
 		// TODO Auto-generated method stub
-		return menuMapper.getRootMenu();
+		return menuMapper.getRootMenu(roleID);
 	}
 	@Override
 	public List<User> getAllUserByPage(int startPro , int pageSize , User user) {
@@ -78,9 +78,9 @@ public class UserServiceImpl implements UserService {
 		userMapper.updateUser(user);
 	}
 	@Override
-	public boolean checkUserName(String user_name) {
+	public boolean checkUserName(int userID , String user_name) {
 		// TODO Auto-generated method stub
-		String checkRes = userMapper.checkUserName(user_name);
+		String checkRes = userMapper.checkUserName(userID , user_name);
 		if(null != checkRes ){
 			return false;
 		}else{

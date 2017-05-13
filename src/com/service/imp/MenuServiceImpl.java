@@ -22,9 +22,14 @@ public class MenuServiceImpl implements MenuService {
 		return menuMapper.getAllMenuByPage(startPos,pageSize,menu.getMenuCode(),menu.getMenuName(),menu.getParentCode(),menu.getIcon(),menu.getUri(),menu.getVisible());
 	}
 	@Override
+	public int getMenuCount(int roleID) {
+		// TODO Auto-generated method stub
+		return menuMapper.getMenuCount(roleID);
+	}
+	@Override
 	public int getMenuCount() {
 		// TODO Auto-generated method stub
-		return menuMapper.getMenuCount();
+		return menuMapper.getMenuCountByConditions();
 	}
 
 }

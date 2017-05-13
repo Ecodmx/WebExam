@@ -11,7 +11,7 @@ public interface UserMapper {
 
 	List<User> selectByPrimaryKey(Integer userId);
 
-	int getUsernameAndPassword(@Param("username")String username,@Param("password") String password);
+	User getUser(@Param("username")String username,@Param("password") String password);
 
 	void insertUser(User user);
 
@@ -23,5 +23,5 @@ public interface UserMapper {
 
 	void updateUser(User user);
 
-	String checkUserName(@Param(value="user_name")String user_name);
+	String checkUserName(@Param(value="userID")int userID,@Param(value="user_name")String user_name);
 }

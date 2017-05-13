@@ -8,6 +8,7 @@
            <typeAlias alias="Role" type="com.model.Role"/>
            <typeAlias alias="Question" type="com.model.Question"/>
            <typeAlias alias="ExamPaper" type="com.model.ExamPaper"/>
+           <typeAlias alias="Answer" type="com.model.Answer"/>
     </typeAliases>
     <mappers>
         <mapper resource="com/mapping/userMapper.xml" />
@@ -15,5 +16,6 @@
         <mapper resource="com/mapping/roleMapper.xml" />
         <mapper resource="com/mapping/quesMapper.xml" />
         <mapper resource="com/mapping/examPaperMapper.xml" />
+        <mapper resource="com/mapping/answerMapper.xml" />
     </mappers>
 </configuration> 

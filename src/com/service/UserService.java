@@ -10,15 +10,15 @@ public interface UserService {
 
 	List<User> getUserById(Integer userId);
 	
-	int getUsernameAndPassword(String username , String password  );
+	User getUser(String username , String password);
 	
 	void insertUser(User user);
 	
-	int getMenuCount();
+	int getMenuCount(int roleID);
 	
-	List<Menu> getMenu();
+	List<Menu> getMenu(int roleID);
 
-	List<Menu> getRootMenu();
+	List<Menu> getRootMenu(int roleID);
 
 	List<User> getAllUserByPage(int startPos, int pageSize, User user);
 
@@ -28,5 +28,5 @@ public interface UserService {
 
 	void updateUser(User user);
 
-	boolean checkUserName(String user_name);
+	boolean checkUserName(int userID ,String user_name);
 }

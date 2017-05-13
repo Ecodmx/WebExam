@@ -10,4 +10,6 @@ public interface RoleService {
 
 	List<Role> getAllRoleByPage(int startPos, int pageSize, Role role);
 
+	Role getRole(int user_id);
+
 }

@@ -26,4 +26,8 @@
         select count(*) from tb_role
     </select>
     
+    <select id="getRoleByID" resultMap="roleResultMap" resultType="Role">
+    	 select r.role_id,r.
+role_name from tb_role as r left join tb_role_link as rl on r.role_id = rl.role_id where rl.link_id = #{user_id};
+    </select>
 </mapper>

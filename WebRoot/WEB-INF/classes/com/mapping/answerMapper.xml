@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.AnswerMapper">
+ 	<resultMap type="Answer" id="answerResultMap">
+        <id property="answerID" column="answer_id"/>
+        <result property="paperID" column="paper_id"/>
+        <result property="userID" column="user_id"/>
+        <result property="answers" column="answers"/>
+        <result property="score" column="score"/>
+        <result property="answerTime" column="answer_time"/>
+        <result property="description" column="description"/>
+       
+    </resultMap>
+         <insert id="insertAnswer" parameterType="Answer" useGeneratedKeys="true" keyProperty="answerID">
+		insert into  tb_answer (paper_id,user_id,answers,score,answer_time) values (#{paperID},#{userID},#{answers},#{score},#{answerTime})
+	</insert>
+
+</mapper>

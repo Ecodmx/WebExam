@@ -1,14 +1,15 @@
 package com.model;
 
 public class Role {
-	private String roleID;
+	private int roleID;
 	private String roleName;
 	private String description;
 	private String group;
-	public String getRoleID() {
+
+	public int getRoleID() {
 		return roleID;
 	}
-	public void setRoleID(String roleID) {
+	public void setRoleID(int roleID) {
 		this.roleID = roleID;
 	}
 	public String getRoleName() {

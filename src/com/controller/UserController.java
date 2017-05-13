@@ -77,7 +77,7 @@ public class UserController {
 	public String saveUser(HttpServletRequest request,User user){
 		JSONObject jo =new JSONObject();
 		int userid = user.getUser_id();
-		boolean checkRes = userService.checkUserName(user.getUser_name());
+		boolean checkRes = userService.checkUserName(userid,user.getUser_name());
 		if(checkRes){
 			jo.put("flag", "true");
 			if(userid>0){

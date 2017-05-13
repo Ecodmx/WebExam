@@ -5,10 +5,6 @@
 
 <% String ids = (String)request.getAttribute("ids"); %>
   <head>
-
-    
-
-    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -66,7 +62,7 @@
 			<div class="col-xs-12">
 				<form class="form-horizontal" role="form">
 					<div class="form-group">
-					
+						<input type="hidden" name="content" id="answer"/>
 						<div class="subject-question">
 							<pre id="ques_content"></pre>
 						</div>
@@ -107,7 +103,7 @@
 		</div>
 		<div class="subject-next">
 
-<input type="hidden" name="content" id="answer"/>
+
 <input id="aheadFinish" type="submit" name="button" class="btn warning-btn" value="提前交卷">
 <input id="next" type="button" name="button" onclick="nextQues()" class="btn btn-primary" value="下一题">
 <input id="submitExam"  type="button" name="button" onclick="submitExam1()" class="btn btn-danger" value="提交试卷">
@@ -141,13 +137,23 @@
 		var quesids = "<%=ids%>";
 		var ids = quesids.split(",");
 		var count = 0;
-			var answers = new Array(ids.length);
+		var answers = new Array(ids.length);
+		var score = new Array(ids.length);
+		score[0] = 0;
 	$("a.subject-options").click(function(){
 		$("a.subject-options").removeClass("selected");
 		$("a.subject-options label").removeClass("checked");
 		$(this).addClass("selected");
 		$(this).children("label").addClass("checked");
 		var answer = $(this).children("label").children("input")[0].value;
+		console.log($("#answer")[0].value);
+		console.log(answer);
+		if(answer == $("#answer")[0].value ){
+			score[count+1] = 2;
+		}else{
+			score[count+1] = 0;
+		}
+		console.log(score);
 		answers[count+1] = answer;
 		console.log(answers);
 	});
@@ -178,7 +184,7 @@
 	         type : "POST",    
 	         data : {"quesid":ids[count]},
 	         success : function(data) {    
-	            
+	             $("#answer")[0].value = data.answer;
 	             $("#ques_content")[0].innerHTML = data.content;
 	             $("#select1")[0].innerHTML=data.select1;
 	             $("#select2")[0].innerHTML=data.select2;
@@ -216,7 +222,7 @@
 	         type : "POST",    
 	         data : {"quesid":ids[count]},
 	         success : function(data) {    
-	            
+	             $("#answer")[0].value = data.answer;
 	             $("#ques_content")[0].innerHTML = data.content;
 	             $("#select1")[0].innerHTML=data.select1;
 	             $("#select2")[0].innerHTML=data.select2;
@@ -249,7 +255,7 @@
 	         type : "POST",    
 	         data : {"quesid":ids[count]},
 	         success : function(data) {    
-	            
+	             $("#answer")[0].value = data.answer;
 	             $("#ques_content")[0].innerHTML = data.content;
 	             $("#select1")[0].innerHTML=data.select1;
 	             $("#select2")[0].innerHTML=data.select2;
@@ -282,12 +288,38 @@
 	}
 	function submitExam1(){
 	
-
+		var an = answers.toString();
+		console.log(an);
+		var s = an.split(",");
+		console.log(s);
+		
+		//计算总分
+		var finalScore = 0;
+		$.each(score, function (i, item) {
+				console.log(item);
+				
+				 finalScore = finalScore+item;
+				
+	             });
+	   
 		 bootbox.confirm("是否确认交卷?",function(res){
 		 	if(res == true){
-		 		alert("交卷");
+		 	$.ajax({
+	         url : "<%=path%>/answer/addAnswer",    
+	         type : "POST",    
+	         data : {"answer":an,"score":finalScore},
+	         success : function(data) {    
+	             console.log(data);
+	            
+	         },    
+	         error : function(data) {
+	        	 alert("error");
+
+	         }    
+	    });   
+// 		 		window.location.href = "<%=path%>/answer/addAnswer?answer="+an+"score="+finalScore;
 		 	}
-		 })
+		 });
 	}
 	
 </script>
