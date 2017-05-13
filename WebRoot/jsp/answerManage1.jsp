@@ -279,25 +279,24 @@
 	var table = $('#example').DataTable({
 	   "serverSide": true,
 	    "ajax": {
-	        url: '<%=path%>/exam/getAllExamPaper',
+	        url: '<%=path%>/answer/getAnswer',
 	        type: 'POST',
 	        data: function(d){
 // 	        	d.user_name = $('#username').val();
-	        	d.paperName = $('#s_paperName').val();
-	        	d.examType = $('#s_papaerType').val();
+	        	d.answerTime = $('#s_paperName').val();
+	        	
 	        }
 	     //   {"user_name" :$('#username').val(),"e_mail":$('#email').val()}
 	    },
 	   
 	     "columns":[
 
-	      {"data":"paperName"},
-	      {"data":"examType"},
-	      {"data":"quesIds"},
-	      {"data":"state"},
-	      {"data":"toGroup"},
-	      {"data":"createUser"},
-	      {"data":"createTime"},
+	      {"data":"paperID"},
+	      {"data":"userID"},
+	      {"data":"answers"},
+	      {"data":"score"},
+	      {"data":"answerTime"},
+
 	      {"data":"description"}
   		],  
   			select: {

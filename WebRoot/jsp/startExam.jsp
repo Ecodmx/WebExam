@@ -124,6 +124,9 @@
 	var month = date.getMonth()+1;
 	var day = date.getDate();
 	var hours = date.getHours()+2;
+	var hours1 = date.getHours();
+	var min = date.getMinutes();
+	var seconds = date.getSeconds();
 	if(hours >= 24){
 		day = day+1;
 		hours = hours -24;
@@ -132,7 +135,7 @@
 
 	$(".ccounter2").ccountdown(year,month,day,''+time);
 	
-
+console.log($(".ccounter2"));
 
 		var quesids = "<%=ids%>";
 		var ids = quesids.split(",");
@@ -303,21 +306,35 @@
 	             });
 	   
 		 bootbox.confirm("是否确认交卷?",function(res){
+			 var now = new Date();
+
+			var nhours = now.getHours() - hours1;
+			var nmin = now.getMinutes() - min;
+			var nsecond = now.getSeconds() - seconds;
+			if(nsecond<0){
+				nsecond = nsecond+60;
+				nmin = nmin-1;
+			}
+			if(nmin<0){
+				nmin = nmin+60;
+				nhours = nhours-1;
+			}
+			var ntime = nhours+":" +nmin+":"+nsecond;
+			
+			console.log(ntime);
 		 	if(res == true){
 		 	$.ajax({
 	         url : "<%=path%>/answer/addAnswer",    
 	         type : "POST",    
 	         data : {"answer":an,"score":finalScore},
-	         success : function(data) {    
-	             console.log(data);
-	            
+	         success : function(data) {
+	           window.location.href = "<%=path%>/jsp/examResult.jsp?score="+finalScore+"&time="+ntime;
 	         },    
 	         error : function(data) {
 	        	 alert("error");
-
 	         }    
 	    });   
-// 		 		window.location.href = "<%=path%>/answer/addAnswer?answer="+an+"score="+finalScore;
+	 		
 		 	}
 		 });
 	}

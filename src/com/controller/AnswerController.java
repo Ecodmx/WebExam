@@ -3,17 +3,23 @@ package com.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.model.Answer;
+import com.model.Page;
+import com.model.User;
 import com.service.AnswerService;
 
 @Controller
@@ -42,4 +48,33 @@ public class AnswerController {
 		return jo.toString();
 		
 	}
+	
+	@RequestMapping("/getAnswer")
+	@ResponseBody
+	public String getAllAnswer (HttpSession session,HttpServletRequest request,Answer answer ){
+		String pageNow =request.getParameter("start");//分页参数
+		String pageSize = request.getParameter("length");//分页参数
+		int draw = Integer.valueOf(request.getParameter("draw")) ;//datatables参数
+		User user = (User) session.getAttribute("User");
+		int userID = user.getUser_id();
+		Page page = null;  
+		List<Answer> allAnswer;
+		
+		int totalCount = answerService.getAnswerCount(answer,userID); //获取分页总数
+	    if (pageNow != null) {  
+	        page = new Page(totalCount, Integer.parseInt(pageNow) , Integer.parseInt(pageSize));  
+	        allAnswer = answerService.getAllAnswerByPage(page.getStartPos(), page.getPageSize(),answer,userID);  
+	    } else {  
+	        page = new Page(totalCount, 1 , 10);
+	        allAnswer = answerService.getAllAnswerByPage(page.getStartPos(), page.getPageSize(),answer,userID);  
+	    }  
+		
+		JSONArray ja = JSONArray.fromObject(allAnswer);
+		StringBuilder sb = new StringBuilder("{\"draw\":"+draw+",\"recordsTotal\":"+totalCount+",\"recordsFiltered\":"+totalCount+",\"data\":");
+		sb.append(ja.toString());
+		sb.append("}");//拼接dataTables的参数 （感觉不太规范）
+		return sb.toString();
+		
+	}
+
 }

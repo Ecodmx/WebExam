@@ -12,8 +12,26 @@
         <result property="description" column="description"/>
        
     </resultMap>
-         <insert id="insertAnswer" parameterType="Answer" useGeneratedKeys="true" keyProperty="answerID">
+     <insert id="insertAnswer" parameterType="Answer" useGeneratedKeys="true" keyProperty="answerID">
 		insert into  tb_answer (paper_id,user_id,answers,score,answer_time) values (#{paperID},#{userID},#{answers},#{score},#{answerTime})
 	</insert>
+	
+	<select id="getAllAnswerByPage" resultMap="answerResultMap" resultType="Answer">
+        select * from tb_answer where 1=1 and user_id = #{userID}
+		<if test="answerTime != null">
+		AND `answer_time`LIKE concat('%', #{answerTime},'%')
+		</if>
+
+		limit #{startPos},#{pageSize} 
+        
+    </select>
+    <!-- 获取用户总数 -->
+    <select id="getAnswerCount" resultType="Integer">
+        select count(*) from tb_answer where 1=1 and user_id = #{userID}
+		<if test="answerTime != null">
+		AND `answer_time`LIKE concat('%', #{answerTime},'%')
+		</if>
+		
+    </select>
 
 </mapper>
